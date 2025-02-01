@@ -178,7 +178,7 @@ loadChatgptDB();
 
 /* ------------------------------------------------*/
 
-global.authFile = `FlashBotSession`;
+global.authFile = `BotSession`;
 const { state, saveState, saveCreds } = await useMultiFileAuthState(
   global.authFile,
 );
@@ -388,7 +388,7 @@ function clearTmp() {
 
 function purgeSession() {
   let prekey = [];
-  let directorio = readdirSync("./FlashBotSession");
+  let directorio = readdirSync("./BotSession");
   let filesFolderPreKeys = directorio.filter((file) => {
     return file.startsWith(
       "pre-key-",
@@ -396,7 +396,7 @@ function purgeSession() {
   });
   prekey = [...prekey, ...filesFolderPreKeys];
   filesFolderPreKeys.forEach((files) => {
-    unlinkSync(`./FlashBotSession/${files}`);
+    unlinkSync(`./BotSession/${files}`);
   });
 }
 
@@ -430,7 +430,7 @@ function purgeSessionSB() {
 }
 
 function purgeOldFiles() {
-  const directories = ["./FlashBotSession/", "./jadibts/"];
+  const directories = ["./BotSession/", "./jadibts/"];
   const oneHourAgo = Date.now() - 60 * 60 * 1000;
   directories.forEach((dir) => {
     readdirSync(dir, (err, files) => {
@@ -482,7 +482,7 @@ async function connectionUpdate(update) {
   }
   let reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
   if (reason == 405) {
-    await fs.unlinkSync("./FlashBotSession/" + "creds.json");
+    await fs.unlinkSync("./BotSession/" + "creds.json");
     console.log(
       chalk.bold.redBright(
         `[ ⚠ ] Conexión replazada, Por favor espere un momento me voy a reiniciar...\nSi aparecen error vuelve a iniciar con : npm start`,
