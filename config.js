@@ -454,7 +454,7 @@ import(`${file}?update=${Date.now()}`);
 
 global.yt = 'https://youtube.com'
 global.ig = 'https://www.instagram.com/terbo_001'
-global.md = 'https://github.com/GataNina-Li/GataBot-MD'
+global.md = 'https://github.com'
 global.fb = 'https://www.facebook.com'
 global.tk = 'https://www.tiktok.com/@mohndalcot'
 global.ths = 'https://www.threads.net/@gata_dios'
