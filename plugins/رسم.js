@@ -1,26 +1,36 @@
-    import fetch from 'node-fetch'; // أو const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-let handler = async (m, { conn, args }) => {
-  const cc = "> © شاورما ";
-  let response = args.join(' ').split('|');
-  if (!args[0]) throw 'ضيف نص أو صورة';
+const handler = async (m, {conn, text, usedPrefix, command}) => {
+    if (!text) throw `*"يا دوب! محتاج نص لإني أقدر أشتغل عليه. جرب حاجة زي كده:\n${usedPrefix + command} افتار*`;
 
-  let res = `https://shadowz-api.vercel.app/ai/text2img?text=${encodeURIComponent(response[0])}`;
-  
-  try {
-    let fetchResponse = await fetch(res);
-    if (!fetchResponse.ok) throw `خطأ في الوصول إلى API: ${fetchResponse.statusText}`;
+    await conn.sendMessage(m.chat, {text: `*خلينا نشوف إيه الصورة اللي ممكن نطلعها من "${text}"...*`}, {quoted: m});
     
-    let imageBuffer = await fetchResponse.buffer();
-    await conn.sendFile(m.chat, imageBuffer, 'Shadow.jpg', cc, m, false);
-  } catch (error) {
-    console.error(error);
-    throw 'حدث خطأ أثناء محاولة جلب الصورة.';
-  }
-};
+    try {
+        // ترجمة النص من العربية إلى الإنجليزية باستخدام API Google Translate
+        const translateResponse = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(text)}`);
+        if (!translateResponse.ok) throw new Error('رد API الترجمة مش مظبوط');
+        
+        const translateData = await translateResponse.json();
+        const translatedText = translateData[0][0][0];  // الحصول على النص المترجم من JSON
 
-handler.help = ['Shadow'];
-handler.tags = ['Shadow'];
-handler.command = /^(رسم|ارسم|ارسمي)$/i;
+        // استدعاء API النص إلى صورة مع النص المترجم
+        const response = await fetch(`https://api-xovvip.vercel.app/text2img?text=${encodeURIComponent(translatedText)}`);
+        if (!response.ok) throw new Error('رد API تحويل النص إلى صورة مش مظبوط');
+        
+        const buffer = await response.buffer();
+        
+        // إرسال الصورة مع النص الأصلي والمترجم
+        const link = `https://api-xovvip.vercel.app/text2img?text=${encodeURIComponent(translatedText)}`;
+        let captionn = `🔎 *النتيجة لـ:* ${text}\n🔗 *الرابط:* ${link}\n🌎 *محرك البحث:* Google`;
 
+        await conn.sendButton(m.chat, captionn, '𝙱𝙾𝚃 𝙴𝙻 𝚃𝙰𝚁𝙱𝙾𝙾 | 🐼❤️', link, [['🔄 صورة تانية 🔄', `#imagen ${text}`]], m);
+        
+    } catch (error) {
+        // عرض تفاصيل الخطأ لتحديد السبب
+        console.error('حدث خطأ:', error);
+        throw `🚫 حدث خطأ أثناء معالجة طلبك. حاول مرة تانية!`;
+    }
+}
+
+handler.command = ['dall-e', 'ارسم', 'رسم', 'تخيل', 'صورة', 'صوره', 'aimg', 'imagine'];
 export default handler;
