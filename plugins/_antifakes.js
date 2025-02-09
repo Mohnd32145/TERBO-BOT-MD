@@ -1,121 +1,30 @@
 let handler = m => m
-handler.before = async function (m, {conn, isAdmin, isBotAdmin, isOwner, isROwner} ) {
-const fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net"
-}
-if (!m.isGroup) return !1
-let chat = global.db.data.chats[m.chat]
-let bot = global.db.data.settings[conn.user.jid] || {}
-if (isBotAdmin && chat.antifake && !isAdmin && !isOwner && !isROwner) {
-//if (!db.data.chats[m.chat].antifake && m.isGroup) throw 0
-let texto = `${ag}هذا العدد *@${m.sender.split`@`[0]}*غير مسموح به في هذه المجموعة!!\n\nآسف سيتم طردك .. رقمك يبدو مزيفًا إلى حد ما 😯`
+handler.all = async function (m) {
+let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
 
-if (m.sender.startsWith('91' || '91')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
+let setting = global.db.data.settings[this.user.jid]
+const settingsREAD = global.db.data.settings[this.user.jid] || {}
 
-if (m.sender.startsWith('92' || '92')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('222' || '222')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('93' || '93')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('91' || '91')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('265' || '265')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return   
-} 
-
-if (m.sender.startsWith('61' || '61')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('62' || '62')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('966' || '966')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('229' || '229')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('40' || '40')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('49' || '49')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('20' || '20')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('963' || '963')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('967' || '967')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('234' || '234')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('210' || '210')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return 
-}
-
-if (m.sender.startsWith('212' || '212')) {
-await conn.reply(m.chat, texto, fkontak,  m)
-let responseb = await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
-if (responseb[0].status === "404") return   
-} 	
-   
+if (m.text && prefixRegex.test(m.text)) {
+await this.sendPresenceUpdate('composing', m.chat)
+await this.readMessages([m.key])
+        
+let usedPrefix = m.text.match(prefixRegex)[0]
+let command = m.text.slice(usedPrefix.length).trim().split(' ')[0]
 }}
+
 export default handler
+
+/*----------------------[ ANTIPRIVADO ]-----------------------*/
+export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }) {
+if (m.isBaileys && m.fromMe) return !0
+if (m.isGroup) return !1
+if (!m.message) return !0 
+if (m.text.includes('PIEDRA') || m.text.includes('PAPEL') || m.text.includes('TIJERA') ||  m.text.includes('menu') ||  m.text.includes('estado') || m.text.includes('bots') ||  m.text.includes('serbot') || m.text.includes('jadibot')) return !0
+let chat = global.db.data.chats[m.chat]
+let bot = global.db.data.settings[this.user.jid] || {}
+if (bot.antiPrivate && !isOwner && !isROwner) {
+await m.reply(`Hola esta prohibido hablar al privado del bot, por lo cual seras bloqueado...\n> _*Para usar mi funciones unirte al  grupo oficial 👇*_\n${nn}`, false, { mentions: [m.sender] })
+await this.updateBlockStatus(m.chat, 'block')}
+return !1
+}
