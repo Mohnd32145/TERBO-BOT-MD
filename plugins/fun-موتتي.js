@@ -4,7 +4,7 @@ conn.reply(m.chat,`*⌬ ❛╏ سبب الوفاه ${pickRandom(global.hinax)}*\
 }
 handler.help = ['S H A D O W']
 handler.tags = ['S H A D O W']
-handler.command = /^موتتي$/i
+handler.command = /^موتي$/i
 export default handler
 
 function pickRandom(list) {
