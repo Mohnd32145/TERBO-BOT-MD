@@ -1,16 +1,8 @@
-let handler  = async (m, { conn }) => {
-conn.reply(m.chat,`*♚  مرحبا بك في قسم لعبة صراحه ♚*\n          ꔹ━━━━━━━━━━━ꔹ\n*『${pickRandom(global.bjssvjs)}』*\n*ꔹ━━━ꔹ❰  𝑻𝑬𝑹𝑩𝑶〔⚡️〕𝑩𝑶𝑻 ❱ꔹ━━━ꔹ*`, m)
-}
-handler.help = ['✓ ◡̈⃝ ✓│صراحه🧸💜']
-handler.tags = ['game']
-handler.command = /صراحه|صراحة|الصراحه/i
-export default handler
+import pkg from '@whiskeysockets/baileys';
+const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = pkg
 
-function pickRandom(list) {
-  return list[Math.floor(list.length * Math.random())]
-}
-
- global.bjssvjs = [ 
+var handler = async (m, { conn, usedPrefix }) => {
+const tips = [
  "صراحه  |  صوتك حلوة؟",
 "صراحه  |  التقيت الناس مع وجوهين؟",
 "صراحه  |  شيء وكنت تحقق اللسان؟",
@@ -71,5 +63,52 @@ function pickRandom(list) {
 "‏صراحه  |  ما اكثر شي ندمن عليه؟",
 "صراحه  |  ما هي أمنياتك المُستقبلية؟‏",
 "صراحه  | هل قبلت فتاه؟", 
-   
+   
  ] 
+const randomImage = tips[Math.floor(Math.random() * tips.length)];
+   var messa = await prepareWAMessageMedia({ image: { url:'https://telegra.ph/file/7f1d9025a63a04bc861bf.jpg' } }, { upload: conn.waUploadToServer });
+let msg = generateWAMessageFromContent(m.chat, {
+  viewOnceMessage: {
+    message: {
+        "messageContextInfo": {
+          "deviceListMetadata": {},
+          "deviceListMetadataVersion": 2
+        },
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: `*${randomImage}*\n*⊱─═⪨༻𓆩⚡𓆪༺⪩═─⊰*`
+          }),
+          footer: proto.Message.InteractiveMessage.Footer.create({
+            text: "𝙱𝙾𝚃 𝙴𝙻 𝚃𝙰𝚁𝙱𝙾𝙾"
+          }),
+          header: proto.Message.InteractiveMessage.Header.create({
+            title: "*⊱⪨༻𓆩〘 ﺟـلـسة صـراﺣـة 💗〙𓆪༺⪩⊰*",
+            subtitle: "الصراحه ",
+            hasMediaAttachment: true, 
+            imageMessage: messa.imageMessage, 
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: [
+              {
+               name: "quick_reply",
+               buttonParamsJson:JSON.stringify({
+                 "display_text":"التالي","id":".صراحه" 
+                })
+               }, 
+              {
+                "name": "quick_reply",
+                "buttonParamsJson": "{\"display_text\":\"الدعم\",\"id\":\".الدعم\"}"
+               } 
+              ],
+          })
+        })
+    }
+  }
+}, {})
+
+await conn.relayMessage(msg.key.remoteJid, msg.message, { messageId: msg.key.id })
+
+} 
+handler.tags = ['frasss'];
+handler.command = ['صراحه','الصراحه','صراحة'];
+export default handler;
