@@ -428,5 +428,5 @@ const handler = async (m, {conn, usedPrefix, command, args, isOwner, isAdmin, is
 };
 handler.help = ['en', 'dis'].map((v) => v + 'able <option>');
 handler.tags = ['group', 'owner'];
-handler.command = /^((en|dis)able|ا(فتح|قفل)|(turn)?[01])$/i;
+handler.command = /^تفعيل|تعطيل$/i;
 export default handler;
