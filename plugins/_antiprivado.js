@@ -1,19 +1,16 @@
+export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner }) {
+    if (m.isBaileys && m.fromMe) return !0;
+    if (m.isGroup) return !1;
+    if (!m.message) return !0;
+    if (m.text.includes('PIEDRA') || m.text.includes('PAPEL') || m.text.includes('TIJERA') || m.text.includes('serbot') || m.text.includes('jadibot')) return !0;
 
-export async function before(m, {conn, isAdmin, isBotAdmin, isOwner, isROwner}) {
-    const datas = global
-    const idioma = datas.db.data.users[m.sender].language
-    const _translate = JSON.parse(fs.readFileSync(`./language/ar.json`))
-    const tradutor = _translate.plugins._antiprivado
+    const chat = global.db.data.chats[m.chat];
+    const bot = global.db.data.settings[this.user.jid] || {};
 
-  if (m.isBaileys && m.fromMe) return !0;
-  if (m.isGroup) return !1;
-  if (!m.message) return !0;
-  if (m.text.includes('PIEDRA') || m.text.includes('PAPEL') || m.text.includes('TIJERA') || m.text.includes('serbot') || m.text.includes('jadibot')) return !0;
-  const chat = global.db.data.chats[m.chat];
-  const bot = global.db.data.settings[this.user.jid] || {};
-  if (bot.antiPrivate && !isOwner && !isROwner) {
-    await m.reply(tradutor.texto1, false, {mentions: [m.sender]});
-    await this.updateBlockStatus(m.chat, 'block');
-  }
-  return !1;
+    if (bot.antiPrivate && !isOwner && !isROwner) {
+        await m.reply(`*[❗] مرحبًا @${m.sender.split`@`[0]}، يُمنع التحدث في الخاص مع البوت لهذا السبب سيتم حظرك.*\n\n*اذا كنت تريد تجربه البوت ادخل جروب الدعم『 https://chat.whatsapp.com/HM05Qd8611G4POc8eFNRaW 』*\n\n*اذا كنت تريد ان تكلم مطور البوت هذا رقمي 『‏‪『https://wa.me/994400776021*`, false, { mentions: [m.sender] });
+        await this.updateBlockStatus(m.chat, 'block');
+    }
+
+    return !1;
 }
